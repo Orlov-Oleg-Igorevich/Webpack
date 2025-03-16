@@ -5,6 +5,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
+  target: 'web',
+  mode: 'development',
   // Указываем путь до входной точки:
   entry: './src/index.js',
   // Описываем, куда следует поместить результат работы:
@@ -12,7 +14,17 @@ module.exports = {
     // Путь до директории (важно использовать path.resolve):
     path: path.resolve(__dirname, 'dist'),
     // Имя файла со сборкой:
-    filename: 'bundle.js'
+  },
+  devServer: {
+    static:  {
+      directory: path.join(__dirname, 'dist'), // путь к директории с index.html
+      watch: true,
+    },
+    port: 9000,
+    hot: true,
+    open: true,
+    liveReload: true,
+    watchFiles: ['src/index.html'],
   },
   // В этом массиве будут перечислены все применяемые лоадеры:
   module: {
@@ -34,10 +46,7 @@ module.exports = {
     new ProgressPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
-      filename: './bundle.html'
     }),
-    new MiniCssExtractPlugin({
-      filename: 'bundle.css'
-    }),
+    new MiniCssExtractPlugin(),
   ]
 }
