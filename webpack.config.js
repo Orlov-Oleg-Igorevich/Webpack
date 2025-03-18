@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   target: 'web',
-  mode: 'development',
   // Указываем путь до входной точки:
   entry: './src/index.js',
   // Описываем, куда следует поместить результат работы:
@@ -29,6 +28,11 @@ module.exports = {
   // В этом массиве будут перечислены все применяемые лоадеры:
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      },
       {
         // Это правило будет применяться ко всем файлам,
         // имя которых подойдет под регулярное выражение:
